@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+/*
 var timer = new Stopwatch();
 timer.Start();
 
@@ -55,3 +56,7 @@ var decoratedContributions = filteredContributions.Select(f => new DecoratedCont
 
 CSVHelper.SaveAsCSV<DecoratedContribution>("./output/decoratedContributions.tsv", decoratedContributions.ToList());
 Console.WriteLine("{0} seconds needed to decorate contributions", timer.ElapsedMilliseconds / 1000);
+
+*/
+
+var decContributions = CSVHelper.ReadCSV<DecoratedContribution>("./output/decoratedContributions.tsv");
