@@ -1,0 +1,17 @@
+/Users/apavlinovic/Documents/GitHub/mia-viz/bin/Debug/net7.0/mia-viz
+/Users/apavlinovic/Documents/GitHub/mia-viz/bin/Debug/net7.0/mia-viz.deps.json
+/Users/apavlinovic/Documents/GitHub/mia-viz/bin/Debug/net7.0/mia-viz.runtimeconfig.json
+/Users/apavlinovic/Documents/GitHub/mia-viz/bin/Debug/net7.0/mia-viz.dll
+/Users/apavlinovic/Documents/GitHub/mia-viz/bin/Debug/net7.0/mia-viz.pdb
+/Users/apavlinovic/Documents/GitHub/mia-viz/bin/Debug/net7.0/CsvHelper.dll
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.csproj.AssemblyReference.cache
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.GeneratedMSBuildEditorConfig.editorconfig
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.AssemblyInfoInputs.cache
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.AssemblyInfo.cs
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.csproj.CoreCompileInputs.cache
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.csproj.CopyComplete
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.dll
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/refint/mia-viz.dll
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.pdb
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/mia-viz.genruntimeconfig.cache
+/Users/apavlinovic/Documents/GitHub/mia-viz/obj/Debug/net7.0/ref/mia-viz.dll

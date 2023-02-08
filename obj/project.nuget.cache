@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "gtg7H+UvLZkjcBI+M3VPDt0Z9Ach8LWihwwyD1hKw8eXthYjlfINruR8/WBxRjI7HfkxxTu2JRCO0AZ3nCBtDw==",
+  "success": true,
+  "projectFilePath": "/Users/apavlinovic/Documents/GitHub/mia-viz/mia-viz.csproj",
+  "expectedPackageFiles": [
+    "/Users/apavlinovic/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

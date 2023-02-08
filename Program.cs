@@ -11,19 +11,19 @@ Console.WriteLine("{0} seconds needed to load: \tpred_metagenome_contrib", timer
 timer.Restart();
 var unstratDescriptions = CSVHelper.ReadCSV<UnstratDescription>("./input/pred_metagenome_unstrat_descrip.tsv");
 var taxonomies = CSVHelper.ReadCSV<Taxonomy>("./input/taxonomy.tsv");
-var filters = CSVHelper.ReadCSV<Filter>("./input/filter.tsv");
+var filters = CSVHelper.ReadCSV<Filter>("./input/filter.tsv").DistinctBy(f => f.Function);
 Console.WriteLine("{0} seconds needed to load: \tpred_metagenome_unstrat_descrip, filters, taxonomy", timer.ElapsedMilliseconds / 1000);
 
 // Extract functions that we want in the output TSV
 timer.Restart();
-var functionsInFilter = filters.Select(f => f.Function).Distinct().ToDictionary(x => x, x => x);
+var functionIdNameDictionary = filters.ToDictionary(x => x.Function, x => x.GeneVariance);
 Console.WriteLine("{0} seconds needed to create filtering dictionary", timer.ElapsedMilliseconds / 1000);
 
 // Filter contributions TSV and report before and after line counts
 timer.Restart();
 Console.WriteLine("Starting to filter contributions");
 Console.WriteLine("Contributions before filtering: \t{0}", contributions.Count());
-var filteredContributions = contributions.Where(c => functionsInFilter.ContainsKey(c.Function));
+var filteredContributions = contributions.Where(c => functionIdNameDictionary.ContainsKey(c.Function));
 Console.WriteLine("Contributions after filtering: \t{0}", filteredContributions.Count());
 Console.WriteLine("{0} seconds needed to filter contributions", timer.ElapsedMilliseconds / 1000);
 
@@ -34,7 +34,6 @@ CSVHelper.SaveAsCSV<Contribution>("./output/filteredContributions.tsv", filtered
 timer.Restart();
 Console.WriteLine("Starting to decorate contribution with taxon and function names");
 var taxonIdNameDictionary = taxonomies.ToDictionary(x => x.FeatureId, x => x.Genus);
-var functionIdNameDictionary = filters.ToDictionary(x => x.Function, x => x.GeneVarianceClass);
 
 var decoratedContributions = filteredContributions.Select(f => new DecoratedContribution()
 {
