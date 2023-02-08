@@ -60,3 +60,51 @@ Console.WriteLine("{0} seconds needed to decorate contributions", timer.ElapsedM
 */
 
 var decContributions = CSVHelper.ReadCSV<DecoratedContribution>("./output/decoratedContributions.tsv");
+
+var functionAbundanceOutputs = new List<FunctionAbundanceOutput>();
+var groupBySampleLocation = decContributions.GroupBy(x => x.Sample);
+foreach (var samplesForLocation in groupBySampleLocation)
+{
+    var functionGroups = samplesForLocation.GroupBy(m => m.Function);
+    foreach (var functionG in functionGroups)
+    {
+        var functionSum = functionG.Sum(x => x.TaxonFunctionAbundance);
+
+        functionAbundanceOutputs.Add(new FunctionAbundanceOutput()
+        {
+            Sample = samplesForLocation.Key,
+            Function = functionG.Key,
+            Sum = functionSum
+        });
+    }
+}
+
+CSVHelper.SaveAsCSV("./output/functionAbundanceOutputs.tsv", functionAbundanceOutputs);
+
+
+var functionAbundanceWithTaxonOutputs = new List<FunctionAbundanceWithTaxonOutput>();
+foreach (var samplesForLocation in groupBySampleLocation)
+{
+    var functionGroups = samplesForLocation.GroupBy(m => m.Function);
+    foreach (var functionG in functionGroups)
+    {
+        var functionSum = functionG.Sum(x => x.TaxonFunctionAbundance);
+        var taxonGroups = functionG.GroupBy(g => g.Taxon);
+        foreach (var taxonGroup in taxonGroups)
+        {
+            var taxonSum = taxonGroup.Sum(x => x.TaxonFunctionAbundance);
+
+            functionAbundanceWithTaxonOutputs.Add(new FunctionAbundanceWithTaxonOutput()
+            {
+                Sample = samplesForLocation.Key,
+                Function = functionG.Key,
+                Taxon = taxonGroup.Key,
+                TaxonSum = taxonSum,
+                TaxonContribution = taxonSum / functionSum
+            });
+        }
+
+    }
+}
+
+CSVHelper.SaveAsCSV("./output/functionAbundanceWithTaxonOutputs.tsv", functionAbundanceWithTaxonOutputs);
