@@ -17,7 +17,7 @@
 mono_crash.*
 
 # Outputs
-[Oo]utput/
+[Oo]utput/*.tsv
 
 # Build results
 [Dd]ebug/
