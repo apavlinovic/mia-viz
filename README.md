@@ -15,6 +15,12 @@ All result files are valid TSV files.
 
 #### process – processing metagenome files\*
 
+Running from Windows
+
+`mia-viz.exe process -c "/path/to/contribution.tsv.gz" -d "/path/to/description.tsv.gz" -t "/path/to/taxonomy.tsv"`
+
+Running from source
+
 `dotnet run process -- -c "/path/to/contribution.tsv.gz" -d "/path/to/description.tsv.gz" -t "/path/to/taxonomy.tsv"`
 
 Parameters:
@@ -24,6 +30,10 @@ Parameters:
 -   -t -> path to taxonomy tsv file
 
 ### generate - generating output files
+
+Running from Windows
+
+`mia-viz.exe generate -t Microbacil Macrobacil`
 
 `dotnet run generate -- -t Microbacil Macrobacil`
 
@@ -41,4 +51,5 @@ Run the following command to build a self contained, Win 64 or OSX ARM 64 compat
 You can find the Release ID nomenclature here: https://learn.microsoft.com/en-us/dotnet/core/rid-catalog
 
 `dotnet publish -c Release -r win-x64 --self-contained true`
+
 `dotnet publish -c Release -r osx.13-arm64 --self-contained true`
