@@ -34,10 +34,11 @@ namespace MiaViz
                 Console.WriteLine("{0} seconds needed to load: \ttpred_metagenome_contrib, pred_metagenome_unstrat_descrip, observedFunctionsFilter, and taxonomy", timer.ElapsedMilliseconds / 1000);
 
                 // Extract functions that we want in the output TSV
-                var functionIdNameDictionary = filters.ToDictionary(x => x.Function, x => x.GeneVariance);
+                var functionToGeneVarianceDictionary = filters.ToDictionary(x => x.Function, x => x.GeneVariance);
+                var functionToGeneDictionary = filters.ToDictionary(x => x.Function, x => x.Gene);
 
                 // Filter contributions TSV and report before and after line counts
-                var filteredContributions = contributions.Where(c => functionIdNameDictionary.ContainsKey(c.Function));
+                var filteredContributions = contributions.Where(c => functionToGeneVarianceDictionary.ContainsKey(c.Function));
 
                 // Save filtered data
                 CSVHelper.SaveAsCSV<Contribution>("./output/1-filteredContributions.tsv", filteredContributions.ToList());
@@ -51,7 +52,8 @@ namespace MiaViz
                 {
                     Sample = f.Sample,
                     // Overriden
-                    Function = functionIdNameDictionary.GetValueOrDefault(f.Function, "NOT_FOUND").Trim(),
+                    Function = functionToGeneVarianceDictionary.GetValueOrDefault(f.Function, "NOT_FOUND").Trim(),
+                    Gene = functionToGeneDictionary.GetValueOrDefault(f.Function, "NOT_FOUND").Trim(),
                     Taxon = taxonIdNameDictionary.GetValueOrDefault(f.Taxon, "NOT_FOUND").Trim(),
 
                     TaxonId = f.Taxon,
@@ -95,6 +97,12 @@ namespace MiaViz
                     var functionGroups = samplesForLocation.GroupBy(m => m.Function);
                     foreach (var functionG in functionGroups)
                     {
+                        if (options.Taxons.Any()
+                        && !options.Taxons.Contains(functionG.First().Taxon))
+                        {
+                            continue;
+                        }
+
                         var functionSum = functionG.Sum(x => x.TaxonFunctionAbundance);
 
                         functionAbundanceOutputs.Add(new FunctionAbundanceOutput()
@@ -110,8 +118,40 @@ namespace MiaViz
                 Console.WriteLine("Saved functionAbundanceOutputs to:");
                 Console.WriteLine(functionAbundanceOutputsPath);
 
+                //
 
-                var functionAbundanceWithTaxonOutputsPath = Path.Combine(Environment.CurrentDirectory, "output/4-functionAbundanceWithTaxonOutputs.tsv");
+                var geneAbundanceOutputsPath = Path.Combine(Environment.CurrentDirectory, "output/4-geneAbundanceOutputs.tsv");
+                var geneAbundanceOutputs = new List<GeneAbundanceOutput>();
+                foreach (var samplesForLocation in groupBySampleLocation)
+                {
+                    var geneGroups = samplesForLocation.GroupBy(m => m.Gene);
+                    foreach (var geneG in geneGroups)
+                    {
+                        if (options.Taxons.Any()
+                        && !options.Taxons.Contains(geneG.First().Taxon))
+                        {
+                            continue;
+                        }
+
+                        var geneSum = geneG.Sum(x => x.TaxonFunctionAbundance);
+
+                        geneAbundanceOutputs.Add(new GeneAbundanceOutput()
+                        {
+                            Sample = samplesForLocation.Key,
+                            Gene = geneG.Key,
+                            Sum = geneSum
+                        });
+                    }
+                }
+
+                CSVHelper.SaveAsCSV(geneAbundanceOutputsPath, geneAbundanceOutputs);
+                Console.WriteLine("Saved geneAbundanceOutputs to:");
+                Console.WriteLine(geneAbundanceOutputsPath);
+
+                //
+
+
+                var functionAbundanceWithTaxonOutputsPath = Path.Combine(Environment.CurrentDirectory, "output/5-functionAbundanceWithTaxonOutputs.tsv");
                 var functionAbundanceWithTaxonOutputs = new List<FunctionAbundanceWithTaxonOutput>();
 
                 foreach (var samplesForLocation in groupBySampleLocation)

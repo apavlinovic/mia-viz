@@ -12,6 +12,9 @@ public class DecoratedContribution
     [Name("function")]
     public string Function { get; set; } = "";
 
+    [Name("gene")]
+    public string Gene { get; set; } = "";
+
     [Name("taxon_id")]
     public int TaxonId { get; set; }
 
