@@ -7,6 +7,10 @@ namespace MiaViz
     {
         static void Main(string[] args)
         {
+            // Create output directory if it doesn't exist
+            System.IO.Directory.CreateDirectory("./output");
+
+            // Map Command Line options to their handler
             CommandLine.Parser.Default.ParseArguments<PreProcessOptions, GenerateOptions>(args).MapResult(
                 (PreProcessOptions opts) => ProcessContributions(opts),
                 (GenerateOptions opts) => GenerateOutputs(opts),
