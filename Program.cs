@@ -109,6 +109,7 @@ namespace MiaViz
 
                 var functionAbundanceWithTaxonOutputsPath = Path.Combine(Environment.CurrentDirectory, "output/4-functionAbundanceWithTaxonOutputs.tsv");
                 var functionAbundanceWithTaxonOutputs = new List<FunctionAbundanceWithTaxonOutput>();
+
                 foreach (var samplesForLocation in groupBySampleLocation)
                 {
                     var functionGroups = samplesForLocation.GroupBy(m => m.Function);
@@ -119,6 +120,12 @@ namespace MiaViz
                         foreach (var taxonGroup in taxonGroups)
                         {
                             var taxonSum = taxonGroup.Sum(x => x.TaxonFunctionAbundance);
+
+                            if (options.Taxons.Any()
+                            && !options.Taxons.Contains(taxonGroup.Key))
+                            {
+                                continue;
+                            }
 
                             functionAbundanceWithTaxonOutputs.Add(new FunctionAbundanceWithTaxonOutput()
                             {

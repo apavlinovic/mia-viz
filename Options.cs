@@ -16,5 +16,6 @@ public class PreProcessOptions
 [Verb("generate", HelpText = "Generate output files. You need to run process before running this verb")]
 public class GenerateOptions
 {
-
+    [Option('t', "taxons", Required = false, HelpText = "Taxon filter")]
+    public IEnumerable<string> Taxons { get; set; } = new List<string>();
 }
