@@ -30,7 +30,24 @@ namespace MiaViz
                 var filters = CSVHelper.ReadCSV<ObservedFunctionsFilter>("./observedFunctions.tsv").DistinctBy(f => f.Function);
                 var contributions = CSVHelper.ReadCompressedCSV<Contribution>(options.ContributionsPath);
                 var unstratDescriptions = CSVHelper.ReadCompressedCSV<UnstratDescription>(options.UnstratDescriptionPath);
-                var taxonomies = CSVHelper.ReadCSV<Taxonomy>(options.TaxonomyPath);
+                var taxonomiesTSV = CSVHelper.ReadCSV<TaxonomyTSV>(options.TaxonomyPath);
+                var taxonomies = taxonomiesTSV.Select(t =>
+                {
+                    var taxonTree = t.Taxon.Split("; ");
+
+                    return new Taxonomy()
+                    {
+                        FeatureId = t.FeatureId,
+                        Domena = taxonTree.FirstOrDefault(s => s.StartsWith("d__"), "").Replace("d__", ""),
+                        Phylum = taxonTree.FirstOrDefault(s => s.StartsWith("p__"), "").Replace("p__", ""),
+                        Class = taxonTree.FirstOrDefault(s => s.StartsWith("c__"), "").Replace("c__", ""),
+                        Order = taxonTree.FirstOrDefault(s => s.StartsWith("o__"), "").Replace("o__", ""),
+                        Family = taxonTree.FirstOrDefault(s => s.StartsWith("f__"), "").Replace("f__", ""),
+                        Genus = taxonTree.FirstOrDefault(s => s.StartsWith("g__"), "").Replace("g__", ""),
+                        Consensus = t.Consensus
+                    };
+                });
+
                 Console.WriteLine("{0} seconds needed to load: \ttpred_metagenome_contrib, pred_metagenome_unstrat_descrip, observedFunctionsFilter, and taxonomy", timer.ElapsedMilliseconds / 1000);
 
                 // Extract functions that we want in the output TSV
