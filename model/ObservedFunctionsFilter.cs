@@ -1,7 +1,7 @@
 using CsvHelper.Configuration.Attributes;
 
 // Function Gene	GeneFullName	GeneVariance	GeneVarianceClass 							
-public class Filter
+public class ObservedFunctionsFilter
 {
     [Name("Function")]
     public string Function { get; set; } = "";
