@@ -15,7 +15,7 @@ All result files are valid TSV files.
 
 #### process – processing metagenome files\*
 
-Running from Windows
+**Running from Windows**
 
 `mia-viz.exe process -c "/path/to/contribution.tsv.gz" -d "/path/to/description.tsv.gz" -t "/path/to/taxonomy.tsv"`
 
@@ -31,9 +31,11 @@ Parameters:
 
 ### generate - generating output files
 
-Running from Windows
+**Running from Windows**
 
 `mia-viz.exe generate -t Microbacil Macrobacil`
+
+Running from source
 
 `dotnet run generate -- -t Microbacil Macrobacil`
 
