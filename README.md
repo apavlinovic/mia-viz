@@ -17,16 +17,15 @@ All result files are valid TSV files.
 
 **Running from Windows**
 
-`mia-viz.exe process -c "/path/to/contribution.tsv.gz" -d "/path/to/description.tsv.gz" -t "/path/to/taxonomy.tsv"`
+`mia-viz.exe process -c "/path/to/contribution.tsv.gz" -t "/path/to/taxonomy.tsv"`
 
 Running from source
 
-`dotnet run process -- -c "/path/to/contribution.tsv.gz" -d "/path/to/description.tsv.gz" -t "/path/to/taxonomy.tsv"`
+`dotnet run process -- -c "/path/to/contribution.tsv.gz" -t "/path/to/taxonomy.tsv"`
 
 Parameters:
 
 -   -c -> path to contribution tsv.gz file
--   -d -> path to description tsv.gz file
 -   -t -> path to taxonomy tsv file
 
 ### generate - generating output files

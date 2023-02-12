@@ -9,8 +9,8 @@ public class PreProcessOptions
     [Option('c', "contrib", Required = true, HelpText = "Path to pred_metagenome_contrib.tsv.gz file")]
     public string ContributionsPath { get; set; } = "";
 
-    [Option('d', "description", Required = true, HelpText = "Path to pred_metagenome_unstrat_descrip.tsv.gz file")]
-    public string UnstratDescriptionPath { get; set; } = "";
+    // [Option('d', "description", Required = true, HelpText = "Path to pred_metagenome_unstrat_descrip.tsv.gz file")]
+    // public string UnstratDescriptionPath { get; set; } = "";
 }
 
 [Verb("generate", HelpText = "Generate output files. You need to run process before running this verb")]
