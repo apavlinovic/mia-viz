@@ -29,7 +29,6 @@ namespace MiaViz
                 Console.WriteLine("Reading contributions");
                 var filters = CSVHelper.ReadCSV<ObservedFunctionsFilter>("./observedFunctions.tsv").DistinctBy(f => f.Function);
                 var contributions = CSVHelper.ReadCompressedCSV<Contribution>(options.ContributionsPath);
-                var unstratDescriptions = CSVHelper.ReadCompressedCSV<UnstratDescription>(options.UnstratDescriptionPath);
                 var taxonomiesTSV = CSVHelper.ReadCSV<TaxonomyTSV>(options.TaxonomyPath);
                 var taxonomies = taxonomiesTSV.Select(t =>
                 {
