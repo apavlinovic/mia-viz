@@ -1,4 +1,4 @@
-# MaiViz – a tool for processing metagenome prediction files.
+# MiaViz – a tool for processing metagenome prediction files.
 
 This tool can open metagenome files, filter them by taxonomy, and output filtered results for further analysis. The tool can also do some basical statistcial analysis, like summing the function abundance per sample location, and function abundance per sample location + taxonomy.
 
