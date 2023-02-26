@@ -166,7 +166,6 @@ namespace MiaViz
 
                 //
 
-
                 var functionAbundanceWithTaxonOutputsPath = Path.Combine(Environment.CurrentDirectory, "output/5-functionAbundanceWithTaxonOutputs.tsv");
                 var functionAbundanceWithTaxonOutputs = new List<FunctionAbundanceWithTaxonOutput>();
 
@@ -179,13 +178,13 @@ namespace MiaViz
                         var taxonGroups = functionG.GroupBy(g => g.Taxon);
                         foreach (var taxonGroup in taxonGroups)
                         {
-                            var taxonSum = taxonGroup.Sum(x => x.TaxonFunctionAbundance);
-
                             if (options.Taxons.Any()
                             && !options.Taxons.Contains(taxonGroup.Key))
                             {
                                 continue;
                             }
+
+                            var taxonSum = taxonGroup.Sum(x => x.TaxonFunctionAbundance);
 
                             functionAbundanceWithTaxonOutputs.Add(new FunctionAbundanceWithTaxonOutput()
                             {
@@ -203,6 +202,55 @@ namespace MiaViz
                 CSVHelper.SaveAsCSV(functionAbundanceWithTaxonOutputsPath, functionAbundanceWithTaxonOutputs);
                 Console.WriteLine("Saved functionAbundanceWithTaxonOutputs to:");
                 Console.WriteLine(functionAbundanceWithTaxonOutputsPath);
+
+                //
+
+                var functionAbundanceWithTaxonAndGeneOutputsPath = Path.Combine(Environment.CurrentDirectory, "output/6-functionAbundanceWithTaxonAndGeneOutput.tsv");
+                var functionAbundanceWithTaxonAndGeneOutputs = new List<FunctionAbundanceWithTaxonAndGeneOutput>();
+
+                foreach (var samplesForLocation in groupBySampleLocation)
+                {
+                    var functionGroups = samplesForLocation.GroupBy(m => m.Function);
+                    foreach (var functionG in functionGroups)
+                    {
+                        var functionSum = functionG.Sum(x => x.TaxonFunctionAbundance);
+                        var taxonGroups = functionG.GroupBy(g => g.Taxon);
+                        foreach (var taxonGroup in taxonGroups)
+                        {
+                            if (options.Taxons.Any()
+                            && !options.Taxons.Contains(taxonGroup.Key))
+                            {
+                                continue;
+                            }
+
+                            var taxonSum = taxonGroup.Sum(x => x.TaxonFunctionAbundance);
+                            var geneGroups = taxonGroup.GroupBy(g => g.Gene);
+
+                            foreach (var gGroup in geneGroups)
+                            {
+                                var geneSum = gGroup.Sum(x => x.TaxonFunctionAbundance);
+
+                                functionAbundanceWithTaxonAndGeneOutputs.Add(new FunctionAbundanceWithTaxonAndGeneOutput()
+                                {
+                                    Sample = samplesForLocation.Key,
+                                    Function = functionG.Key,
+                                    Taxon = taxonGroup.Key,
+                                    TaxonSum = taxonSum,
+                                    TaxonContribution = taxonSum / functionSum,
+                                    Gene = gGroup.Key,
+                                    GeneSum = geneSum,
+                                    GeneContributionInTaxon = geneSum / taxonSum,
+                                    GeneContributionInFunction = geneSum / functionSum,
+                                });
+                            }
+                        }
+                    }
+                }
+
+                CSVHelper.SaveAsCSV(functionAbundanceWithTaxonAndGeneOutputsPath, functionAbundanceWithTaxonAndGeneOutputs);
+                Console.WriteLine("Saved functionAbundanceWithTaxonOutputs to:");
+                Console.WriteLine(functionAbundanceWithTaxonAndGeneOutputsPath);
+
                 return 1;
             }
             catch (System.Exception)
